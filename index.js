@@ -3,10 +3,10 @@
 function operateShoppingList() {
 
     // Changes milk's button from check to un-check...I'm doing this because we aren't 
-    // supposed to change the html in anyway. I added the extra functionality of 
+    // supposed to change the html in any way. I added the extra functionality of 
     // changing the button's text, so I need to dynamically update the check button for 
-    // milk to un-check. If this program was built from scratch and working from an empty 
-    // shopping list, this portion of code would be unnecessary. 
+    // milk to un-check on page load. If this program was built from scratch and working 
+    // from an empty shopping list, this portion of code would be unnecessary. 
     let wrongButtonLabel = $(".shopping-item__checked").next().find('.button-label').eq(0);
     if (wrongButtonLabel.text() === 'check') {
         wrongButtonLabel.text('un-check');
@@ -47,23 +47,23 @@ function operateShoppingList() {
         this.closest("li").remove();
     });
 
-    // Mark item as checked making this toggle on/off strikethrough styling
+    // Mark item as checked by toggling on/off strikethrough styling
     // as well as updating the text of the button itself from check to un-check.
     $("ul").on("click", ".shopping-item-toggle", function(event) {
         
         // Toggle strikethrough styling on/off.
         // Target the span that is the prev() element to this element's parent().
+        // (I couldn't get closest() to work correctly here...)
         let thisShoppingItem = $(this).parent().prev();
         thisShoppingItem.toggleClass("shopping-item__checked");
 
         // Toggle text of button label from check to un-check and vice-versa.
-        // Target label of this button by calling children() on the button.
+        // Target label of this button by calling children() on the button to 
+        // access the span.button-label which is the only child of the button.
         let thisButtonLabel = $(this).children();
         thisButtonLabel.text() === 'check' ? thisButtonLabel.text('un-check') : thisButtonLabel.text('check'); 
-    });
-
-    
-    
+    });  
 }
 
+// Run the function on page load.
 $(operateShoppingList());
